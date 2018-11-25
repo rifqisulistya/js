@@ -15,8 +15,18 @@ file ini menjelaskan TYPE JAM dalam beberapa bagian yaitu:
 * Kelompok validasi terhadap TYPE
 * Konstruktor: Membentuk sebuah JAM dari komponen-komponennya
 * Selektor dan pengubahan nilai pada komponen
+	** GetHour
+	** GetMinute
+	** GetSecond
+	** SetHour
+	** SetMinute
+	** SetSecond
 * Kelompok konversi terhadap TYPE
+	** Konversi Jam ke Detik
+	** Konversi Detik ke Jam
 * Kelompok operasi terhadap TYPE
+	** Operator Relasional
+	** Operator Aritmatika
 
 
 ## Authors

@@ -1,134 +1,109 @@
-/* ******** ADT JAM dalam JavaScript ******** */
+/* ********Membuat class Jam di Javascript******** */
 
-	/* KELOMPOK VALIDASI TERHADAP TIPE */
-	function IsJamValid (HH, MM, SS) {
-		return ((HH>=0)&&(HH<=23)&&(MM>=0)&&(MM<=59)&&(SS>=0)&&(SS<=59));
+/* Konstruktor: Membentuk sebuah JAM dari komponen-komponennya */
+class Jam {
+	constructor(_HH, _MM, _SS)	{
+		this.HH = _HH;
+		this.MM = _MM;
+		this.SS = _SS;
+		//Membentuk sebuah JAM dari komponen-komponennya yang valid
 	}
-	//Mengirim true jika H,M,S dapat membentuk J yang valid
-
-	/* Konstruktor: Membentuk sebuah JAM dari komponen-komponennya */
-	function MakeJAM (HH, MM, SS) {
-		J: JAM;
-		SetHH(J,HH);
-		SetMM(J,MM);
-		SetSS(J,SS) ;
-		return J;
-	}
-	//Membentuk sebuah JAM dari komponen-komponennya yang valid
-
-	/* Selektor: Get dan Set */
-	function GetHour(J) {
-		return J.HH;
-	} 
-	//Mengirimkan bagian HH (Hour) dari JAM
-	function GetMinute(J) {
-		return J.MM;
-	}
-	//Mengirimkan bagian MM (Minute) dari JAM	
-	function GetSecond(J) {
-		return J.SS;
-	}	
-	//Mengirimkan bagian SS (Second) dari JAM	
-
+	/* Selektor */
 	/* PENGUBAH NILAI KOMPONEN */
-	function SetHH (J,NewHH) {
-		J.HH = NewHH;
+	SetHH(NewHH) {
+		this.HH = NewHH;
+		//Mengubah nilai komponen HH dari Jam
 	}	
-	//Mengubah nilai komponen HH dari J
-	function SetMM (J,NewMM) {
-		J.MM = NewMM;
+	SetMM(NewMM) {
+		this.MM = NewMM;
+		//Mengubah nilai komponen MM dari Jam
 	}
-	//Mengubah nilai komponen MM dari J
-	function SetSS (J,NewSS) {
-		J.SS = NewSS;
+	SetSS(NewSS) {
+		this.SS = NewSS;
+		//Mengubah nilai komponen SS dari Jam
 	}
-	//Mengubah nilai komponen SS dari J
-
-
+	GetHour() {
+		return this.HH;
+		//Mengirimkan bagian HH (Hour) dari Jam
+	}
+	GetMinute() {
+		return this.MM;
+		//Mengirimkan bagian MM (Minute) dari Jam
+	}
+	GetSecond() {
+		return this.SS;
+		//Mengirimkan bagian SS (Second) dari Jam
+	}
+	/* KELOMPOK VALIDASI TERHADAP TIPE */
+	IsJamValid() {
+		return ((this.SS>=0&&this.SS<=59) && (this.MM>=0 && this.MM<=59) && (this.HH>=0 && this.HH<=23))
+		//Mengirim true jika HH,MM,SS dapat membentuk Jam yang valid
+	}
 	/* KELOMPOK KONVERSI TERHADAP TYPE */
-	function JamToDetik (JAM J) {
-		return GetHour(J)*3600 + GetMinute(J)*60 + GetSecond(J);
+	JamToDetik() {
+		return this.HH*3600 + this.MM*60 + this.SS;
+		//Diberikan sebuah Jam, mengkonversi menjadi Detik
 	}
-	//Diberikan sebuah JAM, mengkonversi menjadi Detik
-
-	function DetikToJam (N) {
+	DetikToJam(N) {
 		if (N<0) {
-			N=86400+N;
+			N=0;
 		} else {
 			N=N%86400;
 		}
-		SetHH(J,N/3600);
-		SetMM(J,(N%3600)/60);
-		SetSS(J,(N%60));
-		return J;
-	}
-	//Mengirim konversi detik ke JAM
-
+		this.SetHH(Math.floor(N/3600));
+		this.SetMM(Math.floor((N%3600)/60));
+		this.SetSS((N%60));
+		//Mengirim konversi detik ke JAM
+	}	
 	/* KELOMPOK OPERASI TERHADAP TYPE */
-	function JEQ (J1, J2) {
-		return JamToDetik(J1)==JamToDetik(J2);
-	} //Mengirim true jika J1=J2
-	function JNEQ (J1, J2) {
-		return JamToDetik(J1)!=JamToDetik(J2);
-	} //Mengirim true jika J1!=J2
-	function JLT (J1, J2) {
-		return JamToDetik(J1)<JamToDetik(J2);
-	} //Mengirim true jika J1<J2
-	function JGT (J1, J2) {
-		return JamToDetik(J1)>JamToDetik(J2);
-	} //Mengirim true jika J1>J2
-
+	JEQ(jam) {
+		return this.JamToDetik() == jam.JamToDetik();
+		//Mengirim true jika J1=J2
+	}
+	JNEQ(jam) {
+		return this.JamToDetik() != jam.JamToDetik();
+		//Mengirim true jika J1!=J2
+	}
+	JLT(jam) {
+		return this.JamToDetik() < jam.JamToDetik();
+		//Mengirim true jika J1<J2
+	}
+	JGT(jam) {
+		return this.JamToDetik() > jam.JamToDetik();
+		//Mengirim true jika J1>J2
+	}
 	/* OPERATOR ARITMATIKA JAM */
-
-
-	function JPlus (J1, J2) {
-		return DetikToJam(JamToDetik(J1)+JamToDetik(J2));
+	JPlus(jam) {
+		return this.DetikToJam(this.JamToDetik()+jam.JamToDetik());
+		//Menghasilkan J1+J2, dalam bentuk Jam
 	}
-	//Menghasilkan J1+J2, dalam bentuk JAM
-	function JMinus (J1, J2) {
-		return DetikToJam(JamToDetik(J1)-JamToDetik(J2));
+	JMinus(jam) {
+		return this.DetikToJam(this.JamToDetik()-jam.JamToDetik());
+		//Menghasilkan J1-J2, dalam bentuk JAM
 	}
-	//Menghasilkan J1-J2, dalam bentuk JAM
-	function NextDetik (J) {
-		return DetikToJam((JamToDetik(J))+1);
+	NextDetik () {
+		return this.DetikToJam((this.JamToDetik())+1);
+		//Mengirim 1 detik setelah this dalam bentuk Jam
 	}
-	//Mengirim 1 detik setelah J dalam bentuk JAM
-	function NextNDetik (J, N) {
-		return DetikToJam(JamToDetik(J)+N);
+	NextNDetik (N) {
+		return this.DetikToJam((this.JamToDetik())+N);
+		//Mengirim N detik setelah this dalam bentuk Jam
 	}
-	//Mengirim N detik setelah J dalam bentuk JAM
-	function PrevDetik (J) {
-		return DetikToJam((JamToDetik(J))-1);
+	PrevDetik () {
+		return this.DetikToJam((this.JamToDetik())-1);
+		//Mengirim 1 detik sebelum this dalam bentuk Jam
 	}
-	//Mengirim 1 detik sebelum J dalam bentuk JAM
-	function PrevNDetik (J, N) {
-		return DetikToJam(JamToDetik(J)-N);
+	PrevNDetik (N) {
+		return this.DetikToJam(this.JamToDetik()-N);
+		//Mengirim N detik sebelum this dalam bentuk Jam
 	}
-	//Mengirim N detik sebelum J dalam bentuk JAM
-	function Durasi (Jaw, Jakh) {
-		return JamToDetik(Jakh)-JamToDetik(Jaw);
+	Durasi (jam) {
+		return this.JamToDetik()-jam.JamToDetik();
+		//Mengirim Jakh-Jaw dalam detik, dengan kalkulasi hasilnya negatif jika Jaw > JAkhir
 	}
-	//Mengirim Jakh-Jaw dalam detik, dengan kalkulasi hasilnya negatif jika Jaw > JAkhir
+}
 
 /*  ******** Akhir dari Program ADT JAM dalam JavaScript ******** */
-
-
-
-
-/* CATATAN PEMBELAJARAN DI KELAS */
-function tambahujung(sebuahArray,elementtambah) {
-	sebuahArray.push(elementtambah)
-		
-	console.log (sebuahArray)
-}
-
-function arr(sebuahArray) {
-	for (var i = 0; i < sebuahArray.length; i++) {
-		if (sebuahArray[i] % 2 != 0) {
-			console.log (sebuahArray[i])
-		}
-	}
-}
 
 
 
